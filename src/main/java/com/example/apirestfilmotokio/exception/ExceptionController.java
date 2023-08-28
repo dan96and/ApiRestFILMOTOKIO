@@ -1,19 +1,20 @@
 package com.example.apirestfilmotokio.exception;
 
-
-import com.example.apirestfilmotokio.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionController {
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseUtil> hola(MethodArgumentNotValidException manve) {
-        ResponseUtil responseUtil = ResponseUtil.builder().message(manve.getMessage()).errorCode(ResponseUtil.BAD_REQUEST).build();
-        return new ResponseEntity<>(responseUtil, HttpStatus.BAD_REQUEST);
+    public Map<String, String> method(MethodArgumentNotValidException manve) {
+
+        return Map.of("message", manve.getMessage());
     }
 }

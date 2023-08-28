@@ -17,5 +17,11 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.save(review);
         return review;
     }
+
+    @Override
+    public int getReviewsByUserIDAndFilmId(Long userId, Long filmId) {
+
+        return reviewRepository.getByUserAndFilm(userId, filmId);
+    }
 }
 
