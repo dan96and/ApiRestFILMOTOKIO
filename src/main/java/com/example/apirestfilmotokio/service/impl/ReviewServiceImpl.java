@@ -6,6 +6,8 @@ import com.example.apirestfilmotokio.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
@@ -22,6 +24,11 @@ public class ReviewServiceImpl implements ReviewService {
     public int getReviewsByUserIDAndFilmId(Long userId, Long filmId) {
 
         return reviewRepository.getByUserAndFilm(userId, filmId);
+    }
+
+    @Override
+    public List<Review> getReviewsByFilmId(Long filmId) {
+        return reviewRepository.getReviewsByFilmId(filmId);
     }
 }
 

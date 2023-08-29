@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class ReviewController {
     @Autowired
@@ -26,13 +29,25 @@ public class ReviewController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @GetMapping("/getReviews")
+    @GetMapping("/getReviewsSize")
     ResponseEntity<Integer> getReviewsByUserAndFilm(@Valid @RequestParam(name = "userId") Long userId,
                                                     @Valid @RequestParam(name = "filmId") Long filmId) {
 
         int size = reviewService.getReviewsByUserIDAndFilmId(userId, filmId);
 
         return ResponseEntity.ok(size);
+    }
+
+    @GetMapping("/getReviews")
+    ResponseEntity<List<ReviewDTO>> getReviewsByFilmId(@Valid @RequestParam(name = "filmId") Long filmId) {
+
+        List<Review> reviewList = reviewService.getReviewsByFilmId(filmId);
+
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+
+        reviewList.forEach(review -> reviewDTOList.add(convertToDTO(review)));
+
+        return ResponseEntity.ok(reviewDTOList);
     }
 
     Review convertToEntity(ReviewDTO reviewDTO) {
