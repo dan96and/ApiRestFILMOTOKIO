@@ -1,2 +1,11 @@
-package com.example.apirestfilmotokio.repository;public interface UserRepository {
+package com.example.apirestfilmotokio.repository;
+
+import com.example.apirestfilmotokio.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    Optional<User> findByUsername(String username);
 }

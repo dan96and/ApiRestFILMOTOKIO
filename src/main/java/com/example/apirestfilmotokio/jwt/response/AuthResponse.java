@@ -1,2 +1,14 @@
-package com.example.apirestfilmotokio.jwt.response;public class AuthResponse {
+package com.example.apirestfilmotokio.jwt.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthResponse {
+    String token;
 }

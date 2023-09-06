@@ -1,7 +1,8 @@
-package com.example.apirestfilmotokio.jwt.config;
+package com.example.apirestfilmotokio.config;
 
 import com.example.apirestfilmotokio.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,12 +20,12 @@ public class ApplicationConfig {
 
     private final UserRepository userRepository;
 
-    @Bean //Gestionar el proceso de autentifación
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    @Bean //Autentificación personalizado: Encargado verificar el usuario y contraseña del usuario
+    @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailService());
@@ -32,14 +33,20 @@ public class ApplicationConfig {
         return authenticationProvider;
     }
 
-    @Bean //Codificación de contraseñas
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean //Obtienes el usuario, buscandolo por el nombre de usuario
+    @Bean
     public UserDetailsService userDetailService() {
+
         return username -> userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

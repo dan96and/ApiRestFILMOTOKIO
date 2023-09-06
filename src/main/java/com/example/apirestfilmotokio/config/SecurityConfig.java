@@ -1,4 +1,4 @@
-package com.example.apirestfilmotokio.jwt.config;
+package com.example.apirestfilmotokio.config;
 
 import com.example.apirestfilmotokio.jwt.filter.JWTAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,9 @@ public class SecurityConfig {
         return httpSecurity
                 .authorizeHttpRequests(
                         authRequest ->
-                                authRequest.requestMatchers("/auth/**").permitAll()
-//                                .anyRequest().authenticated()
+                                authRequest
+                                        .requestMatchers("/auth/**").permitAll()
+                                        .anyRequest().authenticated()
                 )
                 .sessionManagement(
                         sessionManagment ->
