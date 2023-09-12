@@ -3,6 +3,8 @@ package com.example.apirestfilmotokio.controller;
 import com.example.apirestfilmotokio.domain.Review;
 import com.example.apirestfilmotokio.dto.ReviewDTO;
 import com.example.apirestfilmotokio.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class ReviewController {
     @Autowired
     ModelMapper modelMapper;
 
+    @Operation(summary = "Create a review for a film")
+    @ApiResponse(responseCode = "403", description = "You are not authorized, you need a token")
     @PostMapping("/new-review")
     ResponseEntity<HttpStatus> newReview(@Valid @RequestBody ReviewDTO reviewDTO) {
 
@@ -29,6 +33,8 @@ public class ReviewController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Get the size of a user's review list in a film")
+    @ApiResponse(responseCode = "403", description = "You are not authorized, you need a token")
     @GetMapping("/getReviewsSize")
     ResponseEntity<Integer> getReviewsByUserAndFilm(@Valid @RequestParam(name = "userId") Long userId,
                                                     @Valid @RequestParam(name = "filmId") Long filmId) {
@@ -38,6 +44,8 @@ public class ReviewController {
         return ResponseEntity.ok(size);
     }
 
+    @Operation(summary = "Get the reviews of a film")
+    @ApiResponse(responseCode = "403", description = "You are not authorized, you need a token")
     @GetMapping("/getReviews")
     ResponseEntity<List<ReviewDTO>> getReviewsByFilmId(@Valid @RequestParam(name = "filmId") Long filmId) {
 

@@ -3,9 +3,13 @@ package com.example.apirestfilmotokio.jwt.controller;
 import com.example.apirestfilmotokio.jwt.request.LoginRequest;
 import com.example.apirestfilmotokio.jwt.response.AuthResponse;
 import com.example.apirestfilmotokio.jwt.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -14,6 +18,7 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @Operation(summary = "Obtain token to access API services")
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));

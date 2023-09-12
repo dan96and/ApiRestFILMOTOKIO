@@ -2,6 +2,7 @@ package com.example.apirestfilmotokio.service.impl;
 
 import com.example.apirestfilmotokio.domain.Review;
 import com.example.apirestfilmotokio.repository.ReviewRepository;
+import com.example.apirestfilmotokio.repository.UserRepository;
 import com.example.apirestfilmotokio.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
