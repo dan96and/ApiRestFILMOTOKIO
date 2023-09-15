@@ -8,6 +8,7 @@ import com.example.apirestfilmotokio.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class ReviewController {
     @ApiResponses(value = {@ApiResponse(responseCode = "403", description = "You are not authorized, you need a token"),
             @ApiResponse(responseCode = "409", description = "The user has already created a review on the film")})
     @PostMapping("/new-review")
+    @SecurityRequirement(name = "bearer-authentication")
     ResponseEntity<HttpStatus> newReview(@Valid @RequestBody ReviewDTO reviewDTO) throws DuplicateRecordException {
 
         reviewService.newReview(convertToEntity(reviewDTO));
@@ -40,6 +42,7 @@ public class ReviewController {
     @Operation(summary = "Get the reviews of a film")
     @ApiResponse(responseCode = "403", description = "You are not authorized, you need a token")
     @GetMapping("/getReviews")
+    @SecurityRequirement(name = "bearer-authentication")
     ResponseEntity<List<ReviewDTO>> getReviewsByFilmId(@Valid @RequestParam(name = "filmId") Long filmId) {
 
         List<Review> reviewList = reviewService.getReviewsdFilmId(filmId);
@@ -55,6 +58,7 @@ public class ReviewController {
     @ApiResponses(value = {@ApiResponse(responseCode = "403", description = "You are not authorized, you need a token"),
             @ApiResponse(responseCode = "404", description = "The user dont exist")})
     @GetMapping("/getReviews/{idUser}")
+    @SecurityRequirement(name = "bearer-authentication")
     ResponseEntity<List<ReviewDTO>> getReviewsByUserId(@PathVariable Long idUser) throws DontFoundRecord {
 
         List<Review> reviewList = reviewService.getReviewsUserId(idUser);
