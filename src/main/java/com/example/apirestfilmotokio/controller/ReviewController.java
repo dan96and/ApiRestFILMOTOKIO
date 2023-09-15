@@ -10,8 +10,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class ReviewController {
-    @Autowired
-    ReviewService reviewService;
 
-    @Autowired
-    ModelMapper modelMapper;
+    private final ReviewService reviewService;
+    private final ModelMapper modelMapper;
 
     @Operation(summary = "Create a review for a film")
     @ApiResponses(value = {@ApiResponse(responseCode = "403", description = "You are not authorized, you need a token"),

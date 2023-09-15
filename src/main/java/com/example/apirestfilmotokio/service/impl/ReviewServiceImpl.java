@@ -7,19 +7,17 @@ import com.example.apirestfilmotokio.error.exception.DuplicateRecordException;
 import com.example.apirestfilmotokio.repository.ReviewRepository;
 import com.example.apirestfilmotokio.repository.UserRepository;
 import com.example.apirestfilmotokio.service.ReviewService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
-    @Autowired
-    ReviewRepository reviewRepository;
-
-    @Autowired
-    UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Review newReview(Review review) throws DuplicateRecordException {
