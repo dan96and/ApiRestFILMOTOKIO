@@ -8,6 +8,7 @@ import com.example.apirestfilmotokio.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,15 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
     private final JwtService jwtService;
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-        UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-        return AuthResponse.builder().token(jwtService.getToken(user)).build();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String token = jwtService.getToken(userDetails);
+        return AuthResponse.builder().token(token).build();
     }
 }
